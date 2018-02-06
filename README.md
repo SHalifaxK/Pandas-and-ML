@@ -1,2 +1,2 @@
 # Pandas-and-ML
-Basic Pandas and ML usage
+Loading iris dataset from sklearn
