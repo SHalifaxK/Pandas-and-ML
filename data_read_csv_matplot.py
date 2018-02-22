@@ -11,15 +11,20 @@ from matplotlib import style
 style.use('ggplot')
 
 #read the Tesla data from a csv to pandas dataframe
-data = pd.read_csv('C:/Users/kantomaa/TSLA.csv')
+data = pd.read_csv('C:/Users/kantomaa/TSLA.csv', parse_dates=True, index_col=0)
 
+#making a 100 moving average, takes last 100 observations and calculates the average to a specified column
+#make a new column..min_periods=0 to have some values also in the beginning
+data['100ma']=data['Adj Close'].rolling(window=100, min_periods=0).mean()
 #making sublots using matplotlib, syntax for subplot2grid matplotlib.pyplot.subplot2grid(shape, loc, rowspan=1, colspan=1, **kwargs)
 ax1 = plt.subplot2grid((6,1),(0,0),rowspan=5,colspan=1)
 ax2 = plt.subplot2grid((6,1),(5,0),rowspan=5,colspan=1,sharex=ax1)
 
 #plotting the data, data.index is the date
-#also setting the index is just simply data.set_index['****']
+
 ax1.plot(data.index, data['Open'])
+ax1.plot(data.index, data['100ma'])
 ax2.plot(data.index, data['Close'])
 
 plt.show()
+print data.tail(20)
